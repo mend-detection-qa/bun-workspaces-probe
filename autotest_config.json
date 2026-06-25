@@ -1,11 +1,10 @@
 {
-  "description": "Autotest config for bun-workspaces-probe — Tier 1 / entry #4 of docs/BUN_COVERAGE_PLAN.md. Bundles workspace-basic + workspace-cross-reference. Two workspace members (core, web), web depends on core via workspace:*. Mend may represent as unified root tree (4 nodes) OR per-member sub-trees — assertions use contains/gte to tolerate both.",
+  "description": "Autotest config for bun-workspaces-probe — Tier 1 / entry #4 of docs/BUN_COVERAGE_PLAN.md. Two workspace members (core, web); web depends on core via workspace:*. Mend represents the root project with the workspace members (core, web) as DIRECT deps and their third-party deps (zod under core; hono under web) as TRANSITIVE. groupId-based name assertions are used because Mend emits version-embedded tgz filenames in artifactId for the npm family.",
   "version": 1.8,
   "base_config": {
     "branch": null,
     "validate_scan_output": true,
     "scan_output": {
-      "security_scan_report_conclusion": "success",
       "total_libs_scanned": {
         "gte": 2
       },
@@ -26,12 +25,15 @@
       },
       "direct_dependencies_names_list_group_id": {
         "contains": [
-          "hono",
-          "zod"
+          "core",
+          "web"
         ]
       },
       "transitive_dependencies_names_list_group_id": {
-        "contains": []
+        "contains": [
+          "hono",
+          "zod"
+        ]
       },
       "expected_package_managers": {
         "contains": [
